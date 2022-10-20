@@ -1,16 +1,26 @@
 const Contenedor = require('./Contenedor.js')
 
-const c = new Contenedor()
+const testApp = async () => {
 
-c.getAll()
-
-//c.save({"title":"Peluche de Picachu","price":"1600","thumbnail":"https://res.cloudinary.com/none-img/image/upload/v1663341518/Peluches/pika_mfzfuu.jpg","id":""})
-//c.getById('3')
-//c.deleteById('4')
-//c.getById('4')
-//c.getAll()
-//c.deleteAll()
-
+    const contenedor = new Contenedor()
+    
+     await contenedor.save({    
+        "title":"Peluche de Picachu",
+        "price":"1600",
+        "thumbnail":"https://res.cloudinary.com/none-img/image/upload/v1663341518/Peluches/pika_mfzfuu.jpg",
+        "id":""
+    }) 
+    
+    console.log(await contenedor.getAll());
+    
+    console.log(await contenedor.getById('3'));
+    
+    await contenedor.deleteById('1');
+    
+    await contenedor.deleteAll();    
+    }
+    
+    testApp()
 
 
 
