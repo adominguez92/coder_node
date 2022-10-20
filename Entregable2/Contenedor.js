@@ -6,20 +6,22 @@ class Contenedor {
             let contenido = JSON.parse(await fs.promises.readFile('./productos.json'))
             const element = contenido.find(item => item.id === id)
             if(element){
-                return element
+                console.log(element) 
+                //return element
             }else{
-                return null
+                console.log( null)
             }
-
         }
         catch(err){
             console.log('Error : ' + err)    
         }
 }
+    
     getAll = async () => {
         try{
             let contenido = JSON.parse(await fs.promises.readFile('./productos.json'))
-            return contenido     
+            console.log(contenido)
+            //return contenido     
         }
         catch(err){
             console.log('Error : ' + err)    
