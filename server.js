@@ -5,7 +5,7 @@ const app = express()
 const port = process.env.PORT|| 8080
 
 app.get('/', (req, res) => {
-  res.send('Hola mundo estamos online!')
+  res.send('Hola mundo estamos online, en el proyecto de AD!')
 })
 
 app.get('/productos', async (req, res) => {
