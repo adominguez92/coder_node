@@ -8,7 +8,7 @@ class Contenedor {
             if(element){
                 return element
             }else{                
-                return null
+                return { 'error' : 'producto no encontrado' }
             }
         }
         catch(err){
@@ -28,9 +28,14 @@ class Contenedor {
     deleteById = async (id) => {
         try{
             let contenido = JSON.parse(await fs.promises.readFile('./productos.json'))
-            let borrado = JSON.stringify(contenido.filter(item => item.id !== id))
-            await fs.promises.writeFile('./productos.json', borrado)
-            
+            const element = contenido.find(item => item.id === id)
+            if(element){
+                let borrado = JSON.stringify(contenido.filter(item => item.id !== id))
+                await fs.promises.writeFile('./productos.json', borrado)
+                return { 'success': true }
+            }else{
+                return { 'error' : 'producto no encontrado' }
+            }
         }
         catch(err){
             console.log('Error : ' + err)    
@@ -39,12 +44,18 @@ class Contenedor {
 
     save = async (dato) => {
         try{
+            console.log(dato)
             let contenido = JSON.parse(await fs.promises.readFile('./productos.json'))        
-            let id = (contenido.length + 1).toString()
-            dato.id = id 
+            let id = 0
+            contenido.forEach(element => {
+                element.id > id ? id = element.id : id = id
+            });
+            id++
+            dato.id = id.toString()
             contenido.push(dato)
             let salvado = JSON.stringify(contenido)
             await fs.promises.writeFile('./productos.json', salvado)
+            return this.getById(dato.id)
         }
         catch(err){
             console.log('Error : ' + err)    
@@ -55,6 +66,33 @@ class Contenedor {
         try{
             let vacio = JSON.stringify([])
             await fs.promises.writeFile('./productos.json', vacio)
+        }
+        catch(err){
+            console.log('Error : ' + err)    
+        }
+    }
+
+    modfByID = async (id, title, price, thumbnail) => {
+        try{
+            let contenido = JSON.parse(await fs.promises.readFile('./productos.json'))
+            let element = contenido.find(item => item.id === id)
+            
+            if(element)
+            {  
+                let modificado = contenido.filter(item => item.id !== id)
+                
+                element.title = title
+                element.price = price
+                element.thumbnail = thumbnail
+                modificado.push(element)
+                let salvado = JSON.stringify(modificado)
+                //console.log(salvado)
+                await fs.promises.writeFile('./productos.json', salvado)
+                console.log('ok')
+                return { 'success': true } 
+            }else{
+                return { 'error' : 'producto no encontrado' }
+            }
         }
         catch(err){
             console.log('Error : ' + err)    
