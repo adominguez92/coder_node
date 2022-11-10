@@ -105,7 +105,25 @@ app.get('/form', (req, res)=>{
 */
 
 //usando pug
-
+/*app.get('/products', async (req, res)=>{
+  const contenedor = new Contenedor();
+  const todos = await contenedor.getAll();
+  if(todos.length > 0){
+    res.render('productslist.pug', {hayProductos:true, products: todos })
+  }else{
+    res.render('productslist.pug', {hayProductos:false, products: todos })
+  }
+})
+app.post('/products', async (req, res)=>{
+  const { body } = req
+  const contenedor = new Contenedor()
+  const prodAgregado = await contenedor.save(body)
+  res.json(prodAgregado)
+  res.render('ingresado.pug')
+})
+app.get('/form', (req, res)=>{
+  res.render('form.pug', {})
+})*/
 
 // usando handlebars
 /*app.get('/products', async (req, res) => {

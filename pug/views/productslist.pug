@@ -1,0 +1,32 @@
+html
+    head
+        title='Productos'
+        style
+            include styles.css
+    body
+        ul 
+            li 
+                a(href="/products") Productos 
+                a(href="/form") Formulario
+        
+        h1='Lista de productos'
+        if hayProductos  
+            table 
+                tr 
+                    th='id' 
+                    th='titile' 
+                    th='price' 
+                    th='thumbnail'  
+                for product in products
+                tr
+                    td  
+                        p= product.id 
+                    td  
+                        p= product.title 
+                    td  
+                        p= product.price
+                    td  
+                        div.imgContenedor
+                            img(class='imgPrueba', src=product.thumbnail)           
+        else 
+            h2='No hay productos para mostrar'

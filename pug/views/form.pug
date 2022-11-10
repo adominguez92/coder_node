@@ -1,0 +1,18 @@
+html
+    head
+        title='Formulario'
+        style
+            include styles.css
+    body
+        ul 
+            li 
+                a(href="/products") Productos 
+                a(href="/form") Formulario
+        form(action='/add_movie', method='POST')
+            label(for="title")='Titile'
+            input(type="text" name="title" id="title")
+            label(for="price")='Price' 
+            input(type="text" name="price" id="price")
+            label(for="thumbnail")='Thumbnail'
+            input(type="text" name="thumbnail" id="thumbnail")  
+            input(value='Enviar', type='submit')

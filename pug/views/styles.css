@@ -1,0 +1,29 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.footer {
+    color: blue;
+  }
+  
+  .imgContenedor{
+    height:10rem;
+    width: 10rem;
+  }
+  .imgPrueba
+  {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+  }
+  
+  h1, h2 {
+    font-family: 'Lucida Console', 'Courier New', monospace;
+  }
+  table{
+    display: flex;
+    align-content: center;
+    justify-content: space-around;
+    align-items: stretch;
+  }
