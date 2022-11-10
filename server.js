@@ -82,7 +82,8 @@ routerProd.delete('/:id', async (req, res)=>{
 /**
   Render de Plantillas
 **/
-
+/*
+//con ejs
 app.get('/products', async (req, res)=>{
   const contenedor = new Contenedor();
   const todos = await contenedor.getAll();
@@ -101,11 +102,29 @@ app.post('/products', async (req, res)=>{
 app.get('/form', (req, res)=>{
   res.render('pages/form', {title:'Ingresar un producto'})
 })
+*/
+
+//usando pug
 
 
 // usando handlebars
 /*app.get('/products', async (req, res) => {
   const contenedor = new Contenedor();
   const todos = await contenedor.getAll();
-  res.render('productslist', {productsExist: true, products: todos})
+  if(todos.length > 0){
+    res.render('productslist', {productsExist: true, products: todos})
+  }else{
+    res.render('productslist', {productsExist: false, products: todos})
+  }
+ 
+})
+app.post('/products', async (req, res) => {
+  const { body } = req
+  const contenedor = new Contenedor()
+  const prodAgregado = await contenedor.save(body)
+  res.json(prodAgregado)
+  res.render('exito', {})
+})
+app.get('/form', (req, res)=>{
+  res.render('form', {title:'Ingresar un producto'})
 })*/
