@@ -64,10 +64,11 @@ routerProd.delete('/:id', async (req, res)=>{
   res.json(resultado)
 })
 
-app.get('/products', async (req, res)=>{
-  const contenedor = new Contenedor();
-  const todos = await contenedor.getAll();
+/*app.get('/products', async (req, res)=>{ //version previa
   res.render('pages/products', {title: 'Lista de productos', products: todos })
+})*/
+app.get('/products', async (req, res)=>{
+  res.render('pages/carga', {title: 'Lista de productos'})
 })
 
 app.post('/products', async (req, res)=>{

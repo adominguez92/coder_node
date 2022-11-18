@@ -54,4 +54,5 @@ socket.on('form', (data) =>{
   </tr> 
     `  
 });
+  document.getElementById('tabla').innerHTML = html
 })
