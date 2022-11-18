@@ -27,3 +27,13 @@
     justify-content: space-around;
     align-items: stretch;
   }
+  strong{
+    color: blue;
+  }
+  .hora{
+    color: brown;
+  }
+  .mensaje{
+    color: green;
+    font: italic;
+  }

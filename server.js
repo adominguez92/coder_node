@@ -1,7 +1,7 @@
 const express = require('express')
-const { render } = require('pug')
 const { Router } = express
 const Contenedor = require('./Contenedor.js')
+const Mensajes = require('./Mensajes.js')
 
 const app = express()
 const routerProd = Router()
@@ -11,22 +11,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/public', express.static(__dirname + '/public'));
 
-app.set('view engine', 'ejs'); //configuracion para ejs
+app.set('view engine', 'ejs');
 
+const httpServer = require("http").createServer(app);
+const io = require("socket.io")(httpServer);
+
+httpServer.listen(port, () => console.log('Server On'))
 /**
   API
 **/
-app.listen(port, () => {
+/*app.listen(port, () => {
   console.log(`Example app listening on http://localhost:${port}`)
-})
+})*/
 app.use('/api/productos', routerProd);
 
 app.get('/', (req, res) => {
-  res.send('<h1>Servidor AD</h1>');
-});
-
-app.get('/formulario', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.render('pages/index', {})
 });
 
 routerProd.get('/', async (req, res) => {
@@ -64,17 +64,11 @@ routerProd.delete('/:id', async (req, res)=>{
   res.json(resultado)
 })
 
-/**
-  Render de Plantillas
-**/
-
-//usando ejs
 app.get('/products', async (req, res)=>{
   const contenedor = new Contenedor();
   const todos = await contenedor.getAll();
   res.render('pages/products', {title: 'Lista de productos', products: todos })
 })
-
 
 app.post('/products', async (req, res)=>{
   const { body } = req
@@ -87,5 +81,27 @@ app.post('/products', async (req, res)=>{
 app.get('/form', (req, res)=>{
   res.render('pages/form', {title:'Ingresar un producto'})
 })
+
+//io
+const mensajes = new Mensajes() 
+const msgs = []
+io.on('connection', async (socket) => {
+  msgs = await mensajes.getAll()
+  let fecha = new Date()
+  let formato = '['+fecha.toLocaleTimeString()+']'  
+  io.sockets.emit('msg-list', msgs)
+
+  socket.on('msg', async (data)=>{
+    msgs.push({socketid: socket.id, fecha: formato, ...data})
+    io.sockets.emit('msg-list', msgs)
+    await mensajes.save(msgs)
+  })
+  const contenedor = new Contenedor()
+  const todos = await contenedor.getAll();
+  io.sockets.emit('form', todos)
+  
+  console.log(msgs)
+})
+
 
 
